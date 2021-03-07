@@ -80,7 +80,6 @@ inquirer.prompt(optionList).then((answer) => {
   } else {
     gitmoji = defaultIcons[type];
   }
-  const str = `"${type}: :${gitmoji}: ${msg}"`;
-  console.log('git commit -m' + str);
-  // shell.exec('git commit -m' + str);
+  const command = `git commit -m"${type}: :${gitmoji}: ${msg}"`;
+  shell.exec(command);
 }).catch(console.error);
