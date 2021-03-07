@@ -1,6 +1,6 @@
 {
   "name": "young-commit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "一个用于规范化git提交的命令行工具",
   "main": "index.js",
   "bin": "cli.js",
@@ -12,6 +12,10 @@
     "git-commit"
   ],
   "author": "BluesYoung-web",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:BluesYoung-web/young-commit.git"
+  },
   "license": "ISC",
   "dependencies": {
     "commander": "^7.1.0",
