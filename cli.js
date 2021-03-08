@@ -1,6 +1,6 @@
 #! /usr/bin/env node
-const program = require('commander');
-
+const { program } = require('commander');
+const json = require('./package.json');
 const inquirer = require('inquirer');
 
 const shell = require('shelljs');
@@ -10,8 +10,16 @@ if (!shell.which('git')) {
   shell.exit(1);
 }
  
-program.version('1.0.0').parse(process.argv);
+program.version(json.version)
+  .option('-i, --init')
+  .parse(process.argv);
+const { init } = program.opts();
 
+if (init) {
+  const cmd = `git commit -m"init: :tada: 项目初始化"`;
+  shell.exec(cmd);
+  return;
+}
 
 const optionList = [
   {
