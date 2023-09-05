@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.1.1
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.1.0...v2.1.1)
+
+### 🩹 Fixes
+
+- 🩹 fix init commit bug ([c1d0e0e](https://github.com/BluesYoung-web/young-commit/commit/c1d0e0e))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.1.0
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.0.2...v2.1.0)
