@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.3.0
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.2.0...v2.3.0)
+
+### 🩹 Fixes
+
+- 🩹 兼容未安装过 changelogen 的情况 ([1a0f1b0](https://github.com/BluesYoung-web/young-commit/commit/1a0f1b0))
+
+### 📖 Documentation
+
+- 📖 update README ([27fa02c](https://github.com/BluesYoung-web/young-commit/commit/27fa02c))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.2.0
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.1.1...v2.2.0)
