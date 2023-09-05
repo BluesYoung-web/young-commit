@@ -1,10 +1,10 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 08:30:03
- * @LastEditTime: 2023-09-05 11:30:16
+ * @LastEditTime: 2023-09-05 13:12:33
  * @Description:
  */
-import { defineCommand, runMain } from 'citty';
+import { defineCommand, runMain, showUsage } from 'citty';
 import { $, execa } from 'execa';
 import prompts from 'prompts';
 import { release } from './core';
@@ -29,9 +29,31 @@ const main = defineCommand({
       alias: 'r',
       description: '版本发布',
     },
+    version: {
+      type: 'boolean',
+      alias: 'v',
+      description: '版本信息',
+    },
+    help: {
+      type: 'boolean',
+      alias: 'h',
+      description: '展示工具使用方法',
+    },
   },
   async run({ args }) {
     await $`git config --global core.unicode true`;
+
+    if (args.version) {
+      // @ts-ignore
+      const verison = (await main.meta).version;
+      console.log(`v${verison}`);
+      process.exit(0);
+    }
+
+    if (args.help) {
+      await showUsage(main);
+      process.exit(0);
+    }
 
     if (args.init) {
       await $`git init`;

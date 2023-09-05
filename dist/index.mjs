@@ -1,4 +1,4 @@
-import { defineCommand, runMain } from 'citty';
+import { defineCommand, showUsage, runMain } from 'citty';
 import { $, execa } from 'execa';
 import prompts from 'prompts';
 import { getLastGitTag } from 'changelogen';
@@ -118,10 +118,29 @@ const main = defineCommand({
       type: "boolean",
       alias: "r",
       description: "\u7248\u672C\u53D1\u5E03"
+    },
+    version: {
+      type: "boolean",
+      alias: "v",
+      description: "\u7248\u672C\u4FE1\u606F"
+    },
+    help: {
+      type: "boolean",
+      alias: "h",
+      description: "\u5C55\u793A\u5DE5\u5177\u4F7F\u7528\u65B9\u6CD5"
     }
   },
   async run({ args }) {
     await $`git config --global core.unicode true`;
+    if (args.version) {
+      const verison = (await main.meta).version;
+      console.log(`v${verison}`);
+      process.exit(0);
+    }
+    if (args.help) {
+      await showUsage(main);
+      process.exit(0);
+    }
     if (args.init) {
       await $`git init`;
       await $`git add .`;
