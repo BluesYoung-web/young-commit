@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.1.0
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.0.2...v2.1.0)
+
+### 🚀 Enhancements
+
+- 🚀 add other cmd ([3bacd61](https://github.com/BluesYoung-web/young-commit/commit/3bacd61))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.0.2
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.0.1...v2.0.2)
