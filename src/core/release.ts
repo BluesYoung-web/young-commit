@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 10:48:22
- * @LastEditTime: 2023-09-05 11:33:37
+ * @LastEditTime: 2023-09-05 15:12:56
  * @Description:
  */
 import { getLastGitTag } from 'changelogen';
@@ -23,6 +23,13 @@ function getNextVersions(
 ): Record<ReleaseType | 'next', string> {
   const next: Record<string, string> = {};
 
+  // 兼容 a.b.c.alpha.n 的情况，标准版本为 a.b.c-alpha.n
+  const IsPointPreid = /\.([^0-9\.]+)/gim.test(oldVersion);
+
+  if (IsPointPreid) {
+    oldVersion = oldVersion.replace(/\.([^0-9\.]+)/gim, '-$1');
+  }
+
   const parse = semver.parse(oldVersion);
   if (typeof parse?.prerelease[0] === 'string') {
     preid = parse?.prerelease[0] || 'preid';
@@ -42,6 +49,12 @@ function getNextVersions(
   next.next = parse?.prerelease?.length
     ? semver.inc(oldVersion, 'prerelease', preid)!
     : semver.inc(oldVersion, 'patch')!;
+
+  if (IsPointPreid) {
+    for (const key in next) {
+      next[key] = next[key].replace(/-([^0-9\.]+)/gim, '.$1');
+    }
+  }
 
   return next;
 }

@@ -10,6 +10,10 @@ import { resolve } from 'path';
 
 function getNextVersions(oldVersion, preid = "alpha") {
   const next = {};
+  const IsPointPreid = /\.([^0-9\.]+)/gim.test(oldVersion);
+  if (IsPointPreid) {
+    oldVersion = oldVersion.replace(/\.([^0-9\.]+)/gim, "-$1");
+  }
   const parse = semver.parse(oldVersion);
   if (typeof parse?.prerelease[0] === "string") {
     preid = parse?.prerelease[0] || "preid";
@@ -25,6 +29,11 @@ function getNextVersions(oldVersion, preid = "alpha") {
   ])
     next[type] = semver.inc(oldVersion, type, preid);
   next.next = parse?.prerelease?.length ? semver.inc(oldVersion, "prerelease", preid) : semver.inc(oldVersion, "patch");
+  if (IsPointPreid) {
+    for (const key in next) {
+      next[key] = next[key].replace(/-([^0-9\.]+)/gim, ".$1");
+    }
+  }
   return next;
 }
 async function release() {
