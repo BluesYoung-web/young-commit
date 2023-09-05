@@ -92,6 +92,13 @@ async function release() {
     process.exit(1);
   }
   await task.group((task2) => [
+    task2("\u51C6\u5907 changelogen \u7684\u73AF\u5883", async () => {
+      try {
+        await $`which changelogen`;
+      } catch (error) {
+        await $`npm i -g changelogen`;
+      }
+    }),
     task2("\u751F\u6210 CHANGELOG.md", async () => {
       await $`changelogen -r ${newVersion} --output`;
     }),
@@ -140,6 +147,12 @@ const main = defineCommand({
     }
   },
   async run({ args }) {
+    try {
+      await $`which git`;
+    } catch (error) {
+      console.error("\u627E\u4E0D\u5230 git \u7684\u5B89\u88C5\u4F4D\u7F6E");
+      process.exit(1);
+    }
     await $`git config --global core.unicode true`;
     if (args.version) {
       const verison = (await main.meta).version;

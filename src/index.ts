@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 08:30:03
- * @LastEditTime: 2023-09-05 14:10:16
+ * @LastEditTime: 2023-09-05 16:06:30
  * @Description:
  */
 import { defineCommand, runMain, showUsage } from 'citty';
@@ -41,6 +41,13 @@ const main = defineCommand({
     },
   },
   async run({ args }) {
+    try {
+      await $`which git`;
+    } catch (error) {
+      console.error('找不到 git 的安装位置');
+      process.exit(1);
+    }
+
     await $`git config --global core.unicode true`;
 
     if (args.version) {

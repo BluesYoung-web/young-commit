@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 10:48:22
- * @LastEditTime: 2023-09-05 15:12:56
+ * @LastEditTime: 2023-09-05 16:07:51
  * @Description:
  */
 import { getLastGitTag } from 'changelogen';
@@ -129,6 +129,14 @@ export async function release() {
   }
 
   await task.group((task) => [
+    task('准备 changelogen 的环境', async () => {
+      try {
+        await $`which changelogen`;
+      } catch (error) {
+        await $`npm i -g changelogen`;
+      }
+    }),
+
     task('生成 CHANGELOG.md', async () => {
       await $`changelogen -r ${newVersion} --output`;
     }),
