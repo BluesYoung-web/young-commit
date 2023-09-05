@@ -32,7 +32,7 @@
     "type": "git",
     "url": "git@github.com:BluesYoung-web/young-commit.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "changelogen": "^0.5.5",
     "citty": "^0.1.3",
