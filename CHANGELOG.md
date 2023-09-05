@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.2.0
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.1.1...v2.2.0)
+
+### 🚀 Enhancements
+
+- 🚀 兼容 a.b.c.alpha.n 的情况 ([bb80085](https://github.com/BluesYoung-web/young-commit/commit/bb80085))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.1.1
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.1.0...v2.1.1)
