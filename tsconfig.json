@@ -1,9 +1,11 @@
 {
   "include": ["./src/**/*"],
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "ES2023"],
     "target": "ESNext",
-    "module": "NodeNext",
-    "resolveJsonModule": true
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   }
 }

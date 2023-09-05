@@ -1,32 +1,47 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 08:30:03
- * @LastEditTime: 2023-09-05 10:45:19
+ * @LastEditTime: 2023-09-05 11:30:16
  * @Description:
  */
 import { defineCommand, runMain } from 'citty';
 import { $, execa } from 'execa';
-import { name, version, description } from '../package.json';
 import prompts from 'prompts';
+import { release } from './core';
+import { readFile } from 'fs/promises';
 
 const main = defineCommand({
-  meta: {
-    name,
-    version,
-    description,
-  },
+  meta: new Promise(async (resolve) => {
+    // 编译时，相对路径下的 package.json
+    const info = await readFile(new URL('../package.json', import.meta.url), {
+      encoding: 'utf-8',
+    });
+    resolve(JSON.parse(info));
+  }),
   args: {
     init: {
       type: 'boolean',
       alias: 'i',
       description: '首次提交',
     },
+    release: {
+      type: 'boolean',
+      alias: 'r',
+      description: '版本发布',
+    },
   },
   async run({ args }) {
     await $`git config --global core.unicode true`;
 
     if (args.init) {
-      await $`git commit -m"init: :tada: 项目初始化"`;
+      await $`git init`;
+      await $`git add .`;
+      await $`git commit -m "init: :tada: 项目初始化"`;
+      process.exit(0);
+    }
+
+    if (args.release) {
+      await release();
       process.exit(0);
     }
 

@@ -1,28 +1,135 @@
 import { defineCommand, runMain } from 'citty';
 import { $, execa } from 'execa';
 import prompts from 'prompts';
+import { getLastGitTag } from 'changelogen';
+import c from 'picocolors';
+import semver, { valid, clean } from 'semver';
+import task from 'tasuku';
+import { readFile, writeFile } from 'fs/promises';
+import { resolve } from 'path';
 
-const name = "young-commit";
-const version = "1.0.2";
-const description = "一个用于规范化 git 提交的命令行工具，可以根据 git 提交记录自动生成 changelog";
+function getNextVersions(oldVersion, preid = "alpha") {
+  const next = {};
+  const parse = semver.parse(oldVersion);
+  if (typeof parse?.prerelease[0] === "string") {
+    preid = parse?.prerelease[0] || "preid";
+  }
+  for (const type of [
+    "premajor",
+    "preminor",
+    "prepatch",
+    "prerelease",
+    "major",
+    "minor",
+    "patch"
+  ])
+    next[type] = semver.inc(oldVersion, type, preid);
+  next.next = parse?.prerelease?.length ? semver.inc(oldVersion, "prerelease", preid) : semver.inc(oldVersion, "patch");
+  return next;
+}
+async function release() {
+  const tag = (await getLastGitTag()).toLocaleLowerCase() || "v0.0.0";
+  if (tag.indexOf("v") !== 0) {
+    throw new Error("\u4E0A\u4E00\u4E2A tag \u4E0D\u5408\u6CD5");
+  }
+  const oldVersion = tag.substring(1);
+  const next = getNextVersions(oldVersion);
+  const PADDING = 13;
+  const answers = await prompts([
+    {
+      type: "autocomplete",
+      name: "release",
+      message: `\u5F53\u524D\u7248\u672C ${c.green(oldVersion)}`,
+      initial: "next",
+      choices: [
+        { value: "major", title: `${"major".padStart(PADDING, " ")} ${c.bold(next.major)}` },
+        { value: "minor", title: `${"minor".padStart(PADDING, " ")} ${c.bold(next.minor)}` },
+        { value: "patch", title: `${"patch".padStart(PADDING, " ")} ${c.bold(next.patch)}` },
+        { value: "next", title: `${"next".padStart(PADDING, " ")} ${c.bold(next.next)}` },
+        {
+          value: "prepatch",
+          title: `${"pre-patch".padStart(PADDING, " ")} ${c.bold(next.prepatch)}`
+        },
+        {
+          value: "preminor",
+          title: `${"pre-minor".padStart(PADDING, " ")} ${c.bold(next.preminor)}`
+        },
+        {
+          value: "premajor",
+          title: `${"pre-major".padStart(PADDING, " ")} ${c.bold(next.premajor)}`
+        },
+        { value: "none", title: `${"as-is".padStart(PADDING, " ")} ${c.bold(oldVersion)}` },
+        { value: "custom", title: "custom ...".padStart(PADDING + 4, " ") }
+      ]
+    },
+    {
+      type: (prev) => prev === "custom" ? "text" : null,
+      name: "custom",
+      message: "\u8BF7\u8F93\u5165\u7248\u672C\u53F7\uFF0C\u4F8B\u5982: a.b.c",
+      initial: oldVersion,
+      validate: (custom) => {
+        return valid(custom) ? true : "That's not a valid version number";
+      }
+    },
+    {
+      type: "confirm",
+      name: "changePackageVersion",
+      message: "\u662F\u5426\u4FEE\u6539 package.json",
+      initial: false
+    }
+  ]);
+  const newVersion = answers.release === "none" ? oldVersion : answers.release === "custom" ? clean(answers.custom) : next[answers.release];
+  if (!newVersion) {
+    process.exit(1);
+  }
+  await task.group((task2) => [
+    task2("\u751F\u6210 CHANGELOG.md", async () => {
+      await $`changelogen -r ${newVersion} --output`;
+    }),
+    task2("git commit & git tag", async () => {
+      if (answers.changePackageVersion) {
+        const pkgPath = resolve(process.cwd(), "./package.json");
+        const file = await readFile(pkgPath, { encoding: "utf-8" });
+        const json = JSON.parse(file);
+        json.version = newVersion;
+        await writeFile(pkgPath, JSON.stringify(json, null, 2), { encoding: "utf-8" });
+      }
+      await $`git add .`;
+      await execa("git", ["commit", "-m", `chore(release): v${newVersion}`]);
+      await execa("git", ["tag", "-am", `chore: \u{1F3E1} release v${newVersion}`, `v${newVersion}`]);
+    })
+  ]);
+}
 
 const main = defineCommand({
-  meta: {
-    name,
-    version,
-    description
-  },
+  meta: new Promise(async (resolve) => {
+    const info = await readFile(new URL("../package.json", import.meta.url), {
+      encoding: "utf-8"
+    });
+    resolve(JSON.parse(info));
+  }),
   args: {
     init: {
       type: "boolean",
       alias: "i",
       description: "\u9996\u6B21\u63D0\u4EA4"
+    },
+    release: {
+      type: "boolean",
+      alias: "r",
+      description: "\u7248\u672C\u53D1\u5E03"
     }
   },
   async run({ args }) {
     await $`git config --global core.unicode true`;
     if (args.init) {
-      await $`git commit -m"init: :tada: 项目初始化"`;
+      await $`git init`;
+      await $`git add .`;
+      await $`git commit -m "init: :tada: 项目初始化"`;
+      process.exit(0);
+    }
+    if (args.release) {
+      await release();
       process.exit(0);
     }
     const CommitTypeMap = /* @__PURE__ */ new Map();
