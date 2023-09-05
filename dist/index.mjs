@@ -144,7 +144,7 @@ const main = defineCommand({
     if (args.init) {
       await $`git init`;
       await $`git add .`;
-      await $`git commit -m "init: :tada: 项目初始化"`;
+      await execa("git", ["commit", "-m", "feat: init: :tada: \u9879\u76EE\u521D\u59CB\u5316"]);
       process.exit(0);
     }
     if (args.release) {

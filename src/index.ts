@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 08:30:03
- * @LastEditTime: 2023-09-05 13:12:33
+ * @LastEditTime: 2023-09-05 14:10:16
  * @Description:
  */
 import { defineCommand, runMain, showUsage } from 'citty';
@@ -58,7 +58,7 @@ const main = defineCommand({
     if (args.init) {
       await $`git init`;
       await $`git add .`;
-      await $`git commit -m "init: :tada: 项目初始化"`;
+      await execa('git', ['commit', '-m', 'feat: init: :tada: 项目初始化']);
       process.exit(0);
     }
 
