@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.0.2
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.0.1...v2.0.2)
+
+### 🩹 Fixes
+
+- 🐛  try to fix use bug ([fcf0599](https://github.com/BluesYoung-web/young-commit/commit/fcf0599))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.0.1
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.0.0...v2.0.1)
