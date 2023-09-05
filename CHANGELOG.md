@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.0.1
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.0.0...v2.0.1)
+
+### 🩹 Fixes
+
+- 🐛  try to fix can't use bug ([1253d4e](https://github.com/BluesYoung-web/young-commit/commit/1253d4e))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.0.0
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v1.0.2...v2.0.0)
