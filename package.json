@@ -1,6 +1,6 @@
 {
   "name": "young-commit",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "一个用于规范化 git 提交的命令行工具，可以根据 git 提交记录自动生成 changelog",
   "main": "index.mjs",
   "bin": {

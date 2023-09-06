@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.1
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.3.0...v2.3.1)
+
+### 🩹 Fixes
+
+- 🩹 Ctrl + C 需要终止操作 ([2fb9383](https://github.com/BluesYoung-web/young-commit/commit/2fb9383))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.3.0
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.2.0...v2.3.0)
