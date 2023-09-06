@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 08:30:03
- * @LastEditTime: 2023-09-05 16:06:30
+ * @LastEditTime: 2023-09-06 16:21:14
  * @Description:
  */
 import { defineCommand, runMain, showUsage } from 'citty';
@@ -116,7 +116,12 @@ const main = defineCommand({
           return '请勿输入空字符串！！！';
         },
       },
-    ])) as {
+    ], {
+      onCancel: () => {
+        console.log('------------------主动终止------------------');
+        process.exit(0);
+      }
+    })) as {
       type: string;
       breaking: boolean;
       msg: string;
@@ -127,6 +132,7 @@ const main = defineCommand({
 
     await execa('git', ['commit', '-m', `${type}${breaking ? '!' : ''}: ${icon}${msg}`]);
   },
+  
 });
 
 runMain(main);

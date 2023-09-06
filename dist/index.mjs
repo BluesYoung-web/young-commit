@@ -214,7 +214,12 @@ const main = defineCommand({
           return "\u8BF7\u52FF\u8F93\u5165\u7A7A\u5B57\u7B26\u4E32\uFF01\uFF01\uFF01";
         }
       }
-    ]);
+    ], {
+      onCancel: () => {
+        console.log("------------------\u4E3B\u52A8\u7EC8\u6B62------------------");
+        process.exit(0);
+      }
+    });
     const { type, breaking, msg } = answers;
     const icon = CommitTypeMap.get(type).match(/.+\s/)[0];
     await execa("git", ["commit", "-m", `${type}${breaking ? "!" : ""}: ${icon}${msg}`]);
