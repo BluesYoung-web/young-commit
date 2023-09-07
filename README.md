@@ -18,13 +18,16 @@ npm i young-commit -g
 ## 带参的快捷操作
 
 ```bash
-USAGE young-commit [OPTIONS] 
-# USAGE yc [OPTIONS] 
+USAGE yc [OPTIONS] 
+# USAGE young-commit [OPTIONS] 
 
 OPTIONS
 
-     -i, --init    首次提交
-  -r, --release    版本发布
+     -i, --init    首次提交    
+  -r, --release    版本发布    
+  -p, --publish    发布到 npm 
+  -v, --version    版本信息    
+     -h, --help    展示工具使用方法
 ```
 
 ## 灵感来源
