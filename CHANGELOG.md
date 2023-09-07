@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.1
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v3.0.0...v3.0.1)
+
+### 🩹 Fixes
+
+- 🩹 bug fix ([091b0ff](https://github.com/BluesYoung-web/young-commit/commit/091b0ff))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v3.0.0
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.4.3...v3.0.0)
