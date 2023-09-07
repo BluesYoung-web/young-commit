@@ -4,16 +4,16 @@
  * @LastEditTime: 2023-09-07 09:02:07
  * @Description:
  */
-import { getLastGitTag } from 'changelogen';
-import c from 'picocolors';
-import prompts from 'prompts';
-import semver, { clean as cleanVersion, valid as isValidVersion } from 'semver';
-import type { ReleaseType } from 'semver';
-import { $, execa } from 'execa';
-import task from 'tasuku';
-import { readFile, writeFile } from 'fs/promises';
-import { resolve } from 'path';
-import which from 'which';
+import { readFile, writeFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
+import { getLastGitTag } from 'changelogen'
+import c from 'picocolors'
+import prompts from 'prompts'
+import semver, { clean as cleanVersion, valid as isValidVersion } from 'semver'
+import type { ReleaseType } from 'semver'
+import { $, execa } from 'execa'
+import task from 'tasuku'
+import which from 'which'
 
 /**
  * Returns the next version number for all release types.
@@ -22,19 +22,17 @@ function getNextVersions(
   oldVersion: string,
   preid = 'alpha',
 ): Record<ReleaseType | 'next', string> {
-  const next: Record<string, string> = {};
+  const next: Record<string, string> = {}
 
   // 兼容 a.b.c.alpha.n 的情况，标准版本为 a.b.c-alpha.n
-  const IsPointPreid = /\.([^0-9\.]+)/gim.test(oldVersion);
+  const IsPointPreid = /\.([^0-9\.]+)/gim.test(oldVersion)
 
-  if (IsPointPreid) {
-    oldVersion = oldVersion.replace(/\.([^0-9\.]+)/gim, '-$1');
-  }
+  if (IsPointPreid)
+    oldVersion = oldVersion.replace(/\.([^0-9\.]+)/gim, '-$1')
 
-  const parse = semver.parse(oldVersion);
-  if (typeof parse?.prerelease[0] === 'string') {
-    preid = parse?.prerelease[0] || 'preid';
-  }
+  const parse = semver.parse(oldVersion)
+  if (typeof parse?.prerelease[0] === 'string')
+    preid = parse?.prerelease[0] || 'preid'
 
   for (const type of [
     'premajor',
@@ -45,31 +43,29 @@ function getNextVersions(
     'minor',
     'patch',
   ] as ReleaseType[])
-    next[type] = semver.inc(oldVersion, type, preid)!;
+    next[type] = semver.inc(oldVersion, type, preid)!
 
   next.next = parse?.prerelease?.length
     ? semver.inc(oldVersion, 'prerelease', preid)!
-    : semver.inc(oldVersion, 'patch')!;
+    : semver.inc(oldVersion, 'patch')!
 
   if (IsPointPreid) {
-    for (const key in next) {
-      next[key] = next[key].replace(/-([^0-9\.]+)/gim, '.$1');
-    }
+    for (const key in next)
+      next[key] = next[key].replace(/-([^0-9\.]+)/gim, '.$1')
   }
 
-  return next;
+  return next
 }
 
 export async function release() {
-  const tag = (await getLastGitTag()).toLocaleLowerCase() || 'v0.0.0';
-  if (tag.indexOf('v') !== 0) {
-    throw new Error('上一个 tag 不合法');
-  }
+  const tag = (await getLastGitTag()).toLocaleLowerCase() || 'v0.0.0'
+  if (tag.indexOf('v') !== 0)
+    throw new Error('上一个 tag 不合法')
 
-  const oldVersion = tag.substring(1);
+  const oldVersion = tag.substring(1)
 
-  const next = getNextVersions(oldVersion);
-  const PADDING = 13;
+  const next = getNextVersions(oldVersion)
+  const PADDING = 13
   const answers = (await prompts([
     {
       type: 'autocomplete',
@@ -98,12 +94,12 @@ export async function release() {
       ],
     },
     {
-      type: (prev) => (prev === 'custom' ? 'text' : null),
+      type: prev => (prev === 'custom' ? 'text' : null),
       name: 'custom',
       message: '请输入版本号，例如: a.b.c',
       initial: oldVersion,
       validate: (custom: string) => {
-        return isValidVersion(custom) ? true : "That's not a valid version number";
+        return isValidVersion(custom) ? true : 'That\'s not a valid version number'
       },
     },
     {
@@ -113,49 +109,49 @@ export async function release() {
       initial: false,
     },
   ])) as {
-    release: ReleaseType | 'next' | 'none' | 'custom';
-    custom?: string;
-    changePackageVersion?: boolean;
-  };
-
-  const newVersion =
-    answers.release === 'none'
-      ? oldVersion
-      : answers.release === 'custom'
-      ? cleanVersion(answers.custom!)!
-      : next[answers.release];
-
-  if (!newVersion) {
-    process.exit(1);
+    release: ReleaseType | 'next' | 'none' | 'custom'
+    custom?: string
+    changePackageVersion?: boolean
   }
 
-  await task.group((task) => [
+  const newVersion
+    = answers.release === 'none'
+      ? oldVersion
+      : answers.release === 'custom'
+        ? cleanVersion(answers.custom!)!
+        : next[answers.release]
+
+  if (!newVersion)
+    process.exit(1)
+
+  await task.group(task => [
     task('准备 changelogen 的环境', async () => {
       try {
-        await which('changelogen');
-      } catch (error) {
-        await $`npm i -g changelogen`;
+        await which('changelogen')
+      }
+      catch (error) {
+        await $`npm i -g changelogen`
       }
     }),
 
     task('生成 CHANGELOG.md', async () => {
-      await $`changelogen -r ${newVersion} --output`;
+      await $`changelogen -r ${newVersion} --output`
     }),
     task('git commit & git tag', async () => {
       if (answers.changePackageVersion) {
         // 运行时，当前运行目录下的 package.json
-        const pkgPath = resolve(process.cwd(), './package.json');
+        const pkgPath = resolve(process.cwd(), './package.json')
 
-        const file = await readFile(pkgPath, { encoding: 'utf-8' });
-        const json = JSON.parse(file);
-        json.version = newVersion;
-        await writeFile(pkgPath, JSON.stringify(json, null, 2), { encoding: 'utf-8' });
+        const file = await readFile(pkgPath, { encoding: 'utf-8' })
+        const json = JSON.parse(file)
+        json.version = newVersion
+        await writeFile(pkgPath, JSON.stringify(json, null, 2), { encoding: 'utf-8' })
       }
 
-      await $`git add .`;
+      await $`git add .`
 
-      await execa('git', ['commit', '-m', `chore(release): v${newVersion}`]);
-      await execa('git', ['tag', '-am', `chore: 🏡 release v${newVersion}`, `v${newVersion}`]);
+      await execa('git', ['commit', '-m', `chore(release): v${newVersion}`])
+      await execa('git', ['tag', '-am', `chore: 🏡 release v${newVersion}`, `v${newVersion}`])
     }),
-  ]);
+  ])
 }

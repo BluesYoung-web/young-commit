@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "extends": "@antfu",
+  "rules": {
+    "@typescript-eslint/no-use-before-define": "off",
+    "no-console": "off",
+    "n/prefer-global/process": "off",
+    "unused-imports/no-unused-vars": "off",
+    "@typescript-eslint/ban-types": "off",
+    "vue/valid-v-model": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-throw-literal": "off",
+    "prefer-promise-reject-errors": "off",
+    "no-async-promise-executor": "off"
+  }
+}

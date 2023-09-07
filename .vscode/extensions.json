@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "mhutchie.git-graph",
+    "vue.vscode-typescript-vue-plugin",
+    "antfu.unocss",
+    "antfu.vscode-server-controller",
+    "vue.volar",
+    "voorjaar.windicss-intellisense"
+  ]
+}
