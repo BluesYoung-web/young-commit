@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.4.2
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.4.1...v2.4.2)
+
+### 🩹 Fixes
+
+- 🩹 fix windows exec bug ([7661460](https://github.com/BluesYoung-web/young-commit/commit/7661460))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.4.1
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.4.0...v2.4.1)
