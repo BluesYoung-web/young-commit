@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 10:48:22
- * @LastEditTime: 2023-09-07 11:05:22
+ * @LastEditTime: 2023-09-07 13:18:55
  * @Description:
  */
 import { readFile, writeFile } from 'node:fs/promises'
@@ -108,7 +108,12 @@ export async function release() {
       message: '是否修改 package.json',
       initial: false,
     },
-  ])) as {
+  ], {
+    onCancel: () => {
+      console.log('------------------主动终止------------------')
+      process.exit(0)
+    },
+  })) as {
     release: ReleaseType | 'next' | 'none' | 'custom'
     custom?: string
     changePackageVersion?: boolean

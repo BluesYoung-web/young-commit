@@ -97,7 +97,12 @@ async function release() {
       message: "\u662F\u5426\u4FEE\u6539 package.json",
       initial: false
     }
-  ]);
+  ], {
+    onCancel: () => {
+      console.log("------------------\u4E3B\u52A8\u7EC8\u6B62------------------");
+      process.exit(0);
+    }
+  });
   const newVersion = answers.release === "none" ? oldVersion : answers.release === "custom" ? clean(answers.custom) : next[answers.release];
   if (!newVersion)
     process.exit(1);

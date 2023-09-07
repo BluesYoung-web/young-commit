@@ -27,7 +27,6 @@
   "scripts": {
     "dev": "jiti ./src/index.ts",
     "build": "unbuild",
-    "push": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "node ./init.mjs"
