@@ -20,6 +20,7 @@
     "yc": "index.mjs"
   },
   "files": [
+    "init.mjs",
     "index.mjs",
     "dist"
   ],
