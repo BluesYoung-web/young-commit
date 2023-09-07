@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 10:48:22
- * @LastEditTime: 2023-09-07 09:02:07
+ * @LastEditTime: 2023-09-07 11:05:22
  * @Description:
  */
 import { readFile, writeFile } from 'node:fs/promises'
@@ -58,7 +58,7 @@ function getNextVersions(
 }
 
 export async function release() {
-  const tag = (await getLastGitTag()).toLocaleLowerCase() || 'v0.0.0'
+  const tag = ((await getLastGitTag()) || 'v0.0.0').toLocaleLowerCase()
   if (tag.indexOf('v') !== 0)
     throw new Error('上一个 tag 不合法')
 
@@ -137,7 +137,7 @@ export async function release() {
     task('生成 CHANGELOG.md', async () => {
       await $`changelogen -r ${newVersion} --output`
     }),
-    task('git commit & git tag', async () => {
+    task('git commit & git tag', async ({ task }) => {
       if (answers.changePackageVersion) {
         // 运行时，当前运行目录下的 package.json
         const pkgPath = resolve(process.cwd(), './package.json')
@@ -148,10 +148,17 @@ export async function release() {
         await writeFile(pkgPath, JSON.stringify(json, null, 2), { encoding: 'utf-8' })
       }
 
-      await $`git add .`
-
-      await execa('git', ['commit', '-m', `chore(release): v${newVersion}`])
-      await execa('git', ['tag', '-am', `chore: 🏡 release v${newVersion}`, `v${newVersion}`])
+      await task.group(t => [
+        t('git add .', async () => {
+          await $`git add .`
+        }),
+        t('git commit', async () => {
+          await execa('git', ['commit', '-m', `chore(release): v${newVersion}`])
+        }),
+        t('git tag', async () => {
+          await execa('git', ['tag', '-am', `chore: 🏡 release v${newVersion}`, `v${newVersion}`])
+        }),
+      ])
     }),
   ])
 }
