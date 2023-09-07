@@ -7,6 +7,7 @@ import semver, { valid, clean } from 'semver';
 import task from 'tasuku';
 import { readFile, writeFile } from 'fs/promises';
 import { resolve } from 'path';
+import which from 'which';
 
 function getNextVersions(oldVersion, preid = "alpha") {
   const next = {};
@@ -94,7 +95,7 @@ async function release() {
   await task.group((task2) => [
     task2("\u51C6\u5907 changelogen \u7684\u73AF\u5883", async () => {
       try {
-        await $`which changelogen`;
+        await which("changelogen");
       } catch (error) {
         await $`npm i -g changelogen`;
       }
@@ -148,7 +149,7 @@ const main = defineCommand({
   },
   async run({ args }) {
     try {
-      await $`which git`;
+      await which("git");
     } catch (error) {
       console.error("\u627E\u4E0D\u5230 git \u7684\u5B89\u88C5\u4F4D\u7F6E");
       process.exit(1);

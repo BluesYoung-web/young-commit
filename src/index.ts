@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 08:30:03
- * @LastEditTime: 2023-09-06 16:21:14
+ * @LastEditTime: 2023-09-07 09:01:02
  * @Description:
  */
 import { defineCommand, runMain, showUsage } from 'citty';
@@ -9,6 +9,7 @@ import { $, execa } from 'execa';
 import prompts from 'prompts';
 import { release } from './core';
 import { readFile } from 'fs/promises';
+import which from 'which';
 
 const main = defineCommand({
   meta: new Promise(async (resolve) => {
@@ -42,7 +43,7 @@ const main = defineCommand({
   },
   async run({ args }) {
     try {
-      await $`which git`;
+      await which('git');
     } catch (error) {
       console.error('找不到 git 的安装位置');
       process.exit(1);

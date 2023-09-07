@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-05 10:48:22
- * @LastEditTime: 2023-09-05 16:07:51
+ * @LastEditTime: 2023-09-07 09:02:07
  * @Description:
  */
 import { getLastGitTag } from 'changelogen';
@@ -13,6 +13,7 @@ import { $, execa } from 'execa';
 import task from 'tasuku';
 import { readFile, writeFile } from 'fs/promises';
 import { resolve } from 'path';
+import which from 'which';
 
 /**
  * Returns the next version number for all release types.
@@ -131,7 +132,7 @@ export async function release() {
   await task.group((task) => [
     task('准备 changelogen 的环境', async () => {
       try {
-        await $`which changelogen`;
+        await which('changelogen');
       } catch (error) {
         await $`npm i -g changelogen`;
       }
