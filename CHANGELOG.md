@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.4.3
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.4.2...v2.4.3)
+
+### 🩹 Fixes
+
+- 🩹 文件加入白名单 ([9f2b274](https://github.com/BluesYoung-web/young-commit/commit/9f2b274))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.4.2
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.4.1...v2.4.2)
