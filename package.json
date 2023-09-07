@@ -29,7 +29,7 @@
     "push": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "./init.mjs"
   },
   "dependencies": {
     "changelogen": "^0.5.5",
