@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v3.0.0
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.4.3...v3.0.0)
+
+### 🚀 Enhancements
+
+- 🚀 新增发布至 npm 的功能 ([8b48807](https://github.com/BluesYoung-web/young-commit/commit/8b48807))
+
+### 🩹 Fixes
+
+- 🩹 bug fix ([5c736fd](https://github.com/BluesYoung-web/young-commit/commit/5c736fd))
+
+### 💅 Refactors
+
+- ⚠️  💅 代码结构拆分 + 功能新增 ([5b884b1](https://github.com/BluesYoung-web/young-commit/commit/5b884b1))
+
+### 📖 Documentation
+
+- 📖 update readme ([4d398a7](https://github.com/BluesYoung-web/young-commit/commit/4d398a7))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  💅 代码结构拆分 + 功能新增 ([5b884b1](https://github.com/BluesYoung-web/young-commit/commit/5b884b1))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.4.3
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.4.2...v2.4.3)
