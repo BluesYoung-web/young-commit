@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v2.4.0
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.3.1...v2.4.0)
+
+### 🚀 Enhancements
+
+- 🚀 兼容 window 环境(which polyfill) ([26dca13](https://github.com/BluesYoung-web/young-commit/commit/26dca13))
+
+### 🏡 Chore
+
+- ⚠️  🏡 change eslint as code format tool & code format ([2fcc99c](https://github.com/BluesYoung-web/young-commit/commit/2fcc99c))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  🏡 change eslint as code format tool & code format ([2fcc99c](https://github.com/BluesYoung-web/young-commit/commit/2fcc99c))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v2.3.1
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v2.3.0...v2.3.1)
