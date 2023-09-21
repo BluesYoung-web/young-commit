@@ -157,7 +157,7 @@ async function publish() {
 async function commit() {
   const CommitTypeMap = /* @__PURE__ */ new Map();
   CommitTypeMap.set("feat", "\u{1F680} Enhancements");
-  CommitTypeMap.set("pref", "\u{1F525} Performance");
+  CommitTypeMap.set("perf", "\u{1F525} Performance");
   CommitTypeMap.set("fix", "\u{1FA79} Fixes");
   CommitTypeMap.set("refactor", "\u{1F485} Refactors");
   CommitTypeMap.set("docs", "\u{1F4D6} Documentation");

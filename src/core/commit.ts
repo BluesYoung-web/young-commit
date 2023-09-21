@@ -1,7 +1,7 @@
 /*
  * @Author: zhangyang
  * @Date: 2023-09-07 10:42:42
- * @LastEditTime: 2023-09-07 10:42:43
+ * @LastEditTime: 2023-09-21 11:25:16
  * @Description:
  */
 import { execa } from 'execa'
@@ -10,7 +10,7 @@ import prompts from 'prompts'
 export async function commit() {
   const CommitTypeMap = new Map<string, string>()
   CommitTypeMap.set('feat', '🚀 Enhancements')
-  CommitTypeMap.set('pref', '🔥 Performance')
+  CommitTypeMap.set('perf', '🔥 Performance')
   CommitTypeMap.set('fix', '🩹 Fixes')
   CommitTypeMap.set('refactor', '💅 Refactors')
   CommitTypeMap.set('docs', '📖 Documentation')
