@@ -1,10 +1,8 @@
 #!/usr/bin/env node
-import { execa } from 'execa'
-
 try {
-  await execa('npx', ['simple-git-hooks'])
+  await import('simple-git-hooks/postinstall.js')
   console.log('simple-git-hooks installed successfully')
 }
 catch (error) {
-  console.log('just intsall to use, not dev')
+  console.log('just use, not dev')
 }
