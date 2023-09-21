@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.0.2
+
+[compare changes](https://github.com/BluesYoung-web/young-commit/compare/v3.0.1...v3.0.2)
+
+### 🔥 Performance
+
+- 🔥 优化安装体验 ([2d68c40](https://github.com/BluesYoung-web/young-commit/commit/2d68c40))
+
+### 🩹 Fixes
+
+- ⚠️  🩹 fix typo ([0132195](https://github.com/BluesYoung-web/young-commit/commit/0132195))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  🩹 fix typo ([0132195](https://github.com/BluesYoung-web/young-commit/commit/0132195))
+
+### ❤️ Contributors
+
+- 张扬 <bluesyoung_web@163.com>
+
 ## v3.0.1
 
 [compare changes](https://github.com/BluesYoung-web/young-commit/compare/v3.0.0...v3.0.1)
